@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socket io</title>
+</head>
+
+<body>
+  <h2>Hello World!</h2>
+  <p id="msg"></p>
+
+  <input type="text" id="name">
+  <button onclick="submitHandler()">Submit</button>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    let msg = document.getElementById('msg');
+    var socket = io();
+    //1. message event
+    // socket.on('message', function(msg) {
+    //   document.write(msg)
+    // })
+
+    //2. custom event
+    socket.on('myEvent', (data)=>{
+      msg.innerHTML = data;
+    })
+
+    //3.
+    // function submitHandler(){
+    //   let value = document.getElementById('name').value
+    //   socket.send(value)
+    // }
+    // function submitHandler(){
+    //   let value = document.getElementById('name').value
+    //   socket.emit('myEvent2', value)
+    // }
+
+    //4. Broadcasting
+    socket.on('firstBroadcasting', function(data) {
+      msg.innerHTML = data;
+    })
+
+    //5. Namespace
+    // var socketNspOne = io('/nspOne');
+    // socketNspOne.on('myEvent', function(data){
+    //   msg.innerHTML = data
+    // })
+
+
+  </script>
+</body>
+
+</html>
