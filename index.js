@@ -21,7 +21,7 @@ io.on('connection', function(socket){
     // socket.send("This is a message from server to client.")
 
     //2. custom event
-    socket.emit('myEvent', "This is custom event data2")
+    // socket.emit('myEvent', "This is custom event data2")
   }, 2000)
 
   //3.
@@ -33,8 +33,22 @@ io.on('connection', function(socket){
   // })
 
   //4. Broadcasting //in this case all connected user
-  io.sockets.emit('firstBroadcasting', "Hello everyone")
+  // io.sockets.emit('firstBroadcasting', "Hello everyone")
 
+  
+  //6. chat
+  // socket.on('chat', function(data){
+  //   io.emit('chat-transition', data);
+  // })
+
+  //7. CREATE ROOM
+  socket.join('kitchen-room')
+  io.sockets.in('kitchen-room').emit('cooking', "Fried rice")
+
+  socket.join('bed-room')
+  const bedRoomSize = io.sockets.adapter.rooms.get('bed-room').size;
+  io.sockets.in('bed-room').emit('sleeping', "I am sleeping="+ bedRoomSize)
+  io.sockets.in('bed-room').emit('rest', "I am taking rest="+ bedRoomSize)
 
   //disconnect
   socket.on('disconnect', function() {
@@ -44,12 +58,13 @@ io.on('connection', function(socket){
 
 //namespace is used for grouping the connection
 //5. namespace one
-const nspOne = io.of('/nspOne');
-nspOne.on('connection', function(socket){
-  console.log("User connected from Namespace One", socket.id);
+// const nspOne = io.of('/nspOne');
+// nspOne.on('connection', function(socket){
+//   console.log("User connected from Namespace One", socket.id);
 
-  nspOne.emit('myEvent', "Message from namespace one");
-})
+//   nspOne.emit('myEvent', "Message from namespace one");
+// })
+
 
 // html file 
 app.get('/', (req, res) => {

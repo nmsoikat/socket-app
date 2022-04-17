@@ -11,13 +11,20 @@
 <body>
   <h2>Hello World!</h2>
   <p id="msg"></p>
+  <p id="msg2"></p>
+  <p id="msg3"></p>
 
+  <ul id="chat-box" style="list-style: none;">
+
+  </ul>
   <input type="text" id="name">
   <button onclick="submitHandler()">Submit</button>
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
     let msg = document.getElementById('msg');
+    let msg2 = document.getElementById('msg2');
+    let msg3 = document.getElementById('msg3');
     var socket = io();
     //1. message event
     // socket.on('message', function(msg) {
@@ -25,9 +32,9 @@
     // })
 
     //2. custom event
-    socket.on('myEvent', (data)=>{
-      msg.innerHTML = data;
-    })
+    // socket.on('myEvent', (data)=>{
+    //   msg.innerHTML = data;
+    // })
 
     //3.
     // function submitHandler(){
@@ -40,9 +47,9 @@
     // }
 
     //4. Broadcasting
-    socket.on('firstBroadcasting', function(data) {
-      msg.innerHTML = data;
-    })
+    // socket.on('firstBroadcasting', function(data) {
+    //   msg.innerHTML = data;
+    // })
 
     //5. Namespace
     // var socketNspOne = io('/nspOne');
@@ -50,6 +57,34 @@
     //   msg.innerHTML = data
     // })
 
+
+    //6. Realtime chat
+    //note: message sent to server. server will receive and send same message to client
+
+    // function submitHandler(){
+    //   let input = document.getElementById('name')
+    //   socket.emit('chat', input.value)
+    //   input.value = ''
+    // }
+
+    // socket.on('chat-transition', function(data){
+    //   const ul = document.getElementById('chat-box')
+    //   const li = document.createElement('li')
+    //   li.innerHTML = data;
+    //   ul.appendChild(li);
+    // })
+
+    //7. Using Room
+    socket.on('cooking', function(data){
+      msg.innerHTML = data;
+    })
+
+    socket.on('sleeping', function(data){
+      msg2.innerHTML = data;
+    })
+    socket.on('rest', function(data){
+      msg3.innerHTML = data;
+    })
 
   </script>
 </body>
